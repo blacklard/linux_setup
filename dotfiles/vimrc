@@ -1,0 +1,107 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+	" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'https://github.com/fatih/vim-go'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'scrooloose/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'shumphrey/fugitive-gitlab.vim'
+Plugin 'tpope/vim-repeat'
+Plugin 'Vimjas/vim-python-pep8-indent'
+Bundle 'dbeniamine/cheat.sh-vim'
+Bundle 'Valloric/YouCompleteMe'
+
+
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+set encoding=utf-8
+
+"Make tabs appear as 2 spaces
+set ts=2 sts=0 sw=2 noexpandtab
+
+"Switch between Vim window splits easily
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-H> <C-W>h
+map <C-L> <C-W>l
+
+"highlight
+let python_highlight_all=1
+syntax on
+
+
+"Hybrid line numbers
+set relativenumber
+set number
+set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+
+" Always show statusline
+ set laststatus=2
+
+ " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+ set t_Co=256
+
+ "format json with python -m json.tool
+ map <F2> :.!python -m json.tool<CR>
+ map <F3> :set paste!<CR>
+ map <F8> :Gstatus<CR>
+ map <F9> :Gcommit<CR>
+ map <F10> :Gpush<CR>
+ " Enable folding
+ set foldmethod=indent
+ set foldlevel=99
+ "set space as fold toggle
+ noremap <space> za
+
+ let g:SimpylFold_docstring_preview=1
+
+ au BufNewFile,BufRead *.py
+  	 \ set tabstop=4 |
+     \ set softtabstop=4 |
+     \ set shiftwidth=4 |
+     \ set textwidth=79 |
+     \ set expandtab |
+     \ set autoindent |
+		 \ set fileformat=unix |
+
+au BufNewFile,BufRead *.js,*.html,*.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+
+"define BadWhitespace before using in a match
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+let g:ycm_goto_buffer_command = 'same-buffer'
+"let g:ycm_goto_buffer_command = 'vertical-split'
+let g:ycm_autoclose_preview_window_after_completion=1
+"do django checks
+let g:syntastic_python_pylint_args = "--load-plugins pylint_django"
+map <c-g>  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"print macro for python
+let @p = 'yiwoprint("pA=€kb = ",pA)^'
